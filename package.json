@@ -1,0 +1,26 @@
+{
+  "name": "chozha-cc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "autoprefixer": "^10.3.1",
+    "browser-sync": "^2.27.5",
+    "cssnano": "^5.0.8",
+    "gulp": "^4.0.2",
+    "gulp-postcss": "^9.0.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^5.0.0",
+    "gulp-terser": "^2.0.1",
+    "postcss": "^8.3.6",
+    "sass": "^1.38.0"
+  },
+  "devDependencies": {
+    "gulp-purgecss": "^4.0.3"
+  },
+  "scripts": {
+    "start": "gulp"
+  },
+  "author": "",
+  "license": "ISC"
+}
