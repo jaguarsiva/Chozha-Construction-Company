@@ -1,0 +1,64 @@
+
+@use '../abstracts' as *;
+
+.locate {
+    padding-top: 80px;
+
+    p {
+		color: $gray;
+		font-weight: 300;
+		font-size: 0.875rem;
+		margin-bottom: 10px;
+		text-align: center;
+
+		@include responsive( map-get( $breakpoints, mobiles ) ) {
+			text-align: left;
+			font-size: 1rem;
+		}
+    }
+}
+
+.gmap-outer {
+	position: relative;
+	text-align: right;
+	width: 100%;
+    border-radius: $round;
+	background-color: map-get($black, light);
+	padding: 10px;
+	box-shadow: $shadow;
+}
+
+.gmap-inner {
+	overflow: hidden;
+	background: none !important;
+	width: 100%;
+	border-radius: $round;
+}
+
+.gmap {
+  	width: 100%;
+	aspect-ratio: 4 / 3;
+	border-radius: $round;
+}
+
+.locate-icon {
+	display: none;
+	position: absolute;
+	z-index: -1;
+	top: -150px;
+	right: -25px;
+}
+
+@include responsive( map-get( $breakpoints, laptops ) ) {
+	.locate-icon {
+		display: block;
+	}
+
+	.gmap-outer {
+		padding: 20px;
+	}
+
+	.gmap {
+		aspect-ratio: 4/2;
+	}
+}

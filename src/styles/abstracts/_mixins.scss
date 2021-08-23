@@ -1,0 +1,6 @@
+
+@mixin responsive( $breakpoint, $condition: min-width ) {
+    @media ( $condition: $breakpoint ) {
+        @content;
+    }
+}

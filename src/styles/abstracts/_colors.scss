@@ -1,8 +1,23 @@
 
+// Black
 $black: (
-    light: '#181F29',
-    dark: '#0E151F',
+    light: #1A2029,
+    dark: #0E151F,
+    darker: #161616
 );
 
-$yellow: '#F6D400';
-$green: '#036765';
+// White
+$white: #F9F9F9;
+$gray: #C8C8C8;
+
+// Yellow
+$yellow: #F6D400;
+$light-yellow: rgba( $yellow, 0.25 );
+$grey-yellow: rgba(241, 194, 27, 0.8);
+
+// Green
+$green: #036765;
+
+// Blue
+$blue: #001F4E;
+$blue-shadow: #01042F;

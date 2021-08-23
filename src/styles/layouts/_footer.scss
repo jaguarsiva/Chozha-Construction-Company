@@ -1,0 +1,59 @@
+
+@use '../abstracts' as *;
+
+footer {
+    padding: 25px 0 15px;
+    background-color: map-get( $black, light );
+
+    @include responsive( map-get($breakpoints, tablets) ) {
+        padding: 20px 0;
+        margin-left: min(30%, 350px);
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+    a {
+        height: 30px;
+        width: 30px;
+
+        &:hover, &:focus, &:active {
+            svg {
+                fill: $white;
+            }
+        }
+    }
+
+    svg {
+        fill: $gray;
+        height: 30px;
+        width: 30px;
+    }
+}
+
+.text-copyrights {
+    color: $gray;
+    text-align: center;
+    line-height: 2;
+    display: block;
+    font-weight: 400;
+
+    @include responsive( map-get($breakpoints, tablets), max-width ) {
+        margin: 30px auto 0;
+    }
+
+    span {
+        @include responsive( map-get($breakpoints, tablets), max-width ) {
+            display: block;
+        }
+    }
+}

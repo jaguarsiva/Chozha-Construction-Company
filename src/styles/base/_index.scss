@@ -1,2 +1,50 @@
+
+@use '../abstracts' as *;
 @forward  './normalize';
 @forward './resets';
+
+html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+.is-frozen {
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: map-get( $black, dark );
+    color: $white;
+    overflow-x: hidden;
+}
+
+h2 {
+    font-size: 2rem;
+    line-height: 1.5;
+    font-weight: 700;
+    position: relative;
+    margin-bottom: 30px;
+    text-align: center;
+    text-transform: uppercase;
+
+    &::before {
+        content: '';
+        background-color: $grey-yellow;
+        height: 1.5px;
+        width: 100%;
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+    }
+
+    @include responsive( map-get( $breakpoints, tablets ) ) {
+        width: fit-content;
+        text-align: left;
+
+        &::before {
+            bottom: 0px;
+            height: 2px;
+        }
+    }
+}

@@ -1,10 +1,17 @@
 
 
 // Common Device Breakpoints
-
 $breakpoints: (
     mobiles: '600px',
     tablets: '768px',
     laptops: '1024px',
     large-screens: '1440px'
 );
+
+$mont: 'Montserrat', sans-serif;
+
+// Box shadow
+$shadow: 10px 10px 20px 0 rgba( #000, 0.75 );
+
+// Border radius
+$round: 0;

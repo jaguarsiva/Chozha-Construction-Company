@@ -76,7 +76,8 @@ function jsTask(){
 // Browser sync
 function browsersyncServe( cb ) {
     browsersync.init({
-        server: { baseDir: paths.destFolder }
+        server: { baseDir: paths.destFolder },
+        ghostMode: false
     });
     cb();
 }
@@ -89,9 +90,10 @@ function browsersyncReload( cb ) {
 // Watch Task
 function watchTask() {
     watch(
-        [ paths.htmlFiles, paths.scssFiles, paths.jsFiles ],
-        series( csstask, jsTask, browsersyncReload )
+        [ paths.htmlFiles, paths.scssFiles ],
+        series( csstask, browsersyncReload )
     );
+    watch( paths.jsFiles, series( csstask, jsTask, browsersyncReload ) );
 }
 
 // Gulp tasks

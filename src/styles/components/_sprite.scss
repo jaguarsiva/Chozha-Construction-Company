@@ -1,0 +1,71 @@
+
+@use '../abstracts' as *;
+
+.sprite {
+    display: inline-block;
+    background-image: url('../images/sprite.png');
+    background-size: 1862px 1454px;
+    background-repeat: no-repeat;
+}
+
+.blob-home {
+    width: 666px; height: 681px;
+    background-position: -10px -390px;
+}
+
+.blob-projects {
+    width: 411px; height: 366px;
+    background-position: -696px -390px;
+}
+
+.contract {
+    width: 209px; height: 200px;
+    background-position: -1127px -390px;
+}
+
+.elevation {
+    width: 309px; height: 158px;
+    background-position: -425px -1091px;
+}
+
+.blob-contact {
+    width: 395px; height: 353px;
+    background-position: -10px -1091px;
+}
+
+.locate-icon {
+    width: 152px; height: 188px;
+    background-position: -1657px -217px;
+}
+
+.wave {
+    width: 1440px; height: 360px;
+    background-position: -10px -10px;
+    max-width: 100vw;
+}
+
+.logo {
+    background-position: -1657px -151px;
+    height: 45px;
+    width: 195px;
+
+    @include responsive( map-get($breakpoints, tablets) ) {
+        width: 195px; height: 187px;
+        background-position: -1657px -10px;
+    }
+}
+
+.consultant {
+    width: 167px; height: 200px;
+    background-position: -1470px -10px;
+}
+
+.vasthu {
+    width: 265px; height: 264px;
+    background-position: -696px -776px;
+}
+
+.ppa {
+    width: 305px; height: 217px;
+    background-position: -981px -776px;
+}

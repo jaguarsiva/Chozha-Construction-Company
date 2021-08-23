@@ -1,0 +1,30 @@
+@use '../abstracts' as *;
+
+@include responsive( map-get($breakpoints, tablets) ) {
+    .main-box {
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+    }
+}
+
+main {
+    margin-top: 64px;
+
+    @include responsive( map-get($breakpoints, tablets) ) {
+        margin-top: 0;
+        width: 70%;
+        max-width: 1090px;
+        margin-left: min(30%, 350px);
+    }
+}
+
+.wave {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+}
