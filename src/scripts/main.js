@@ -25,17 +25,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Nav Links
-    navLinks.forEach( link => {
-        link.addEventListener('click', () => {
-            document.querySelector('nav a.is-active').classList.remove('is-active');
-            link.classList.add('is-active');
-            if( window.innerWidth < 768 ) {
+    if( window.innerWidth < 768 ) {
+        navLinks.forEach( link => {
+            link.addEventListener('click', () => {
                 hamburger.classList.remove('is-active');
                 nav.classList.remove('is-open');
                 html.classList.remove('is-frozen');
-            }
+                document.querySelector('nav a.is-active').classList.remove('is-active');
+                link.classList.add('is-active');
+            });
         });
-    });
+    }
 
     // Projects
     projectButtons.forEach( btn => {
@@ -65,4 +65,20 @@ document.addEventListener('DOMContentLoaded', () => {
     modalContents.addEventListener('click', event => {
         event.stopPropagation();
     });
+
+    // Observer
+    if( 768 <= window.innerWidth ) {
+        const sections = document.querySelectorAll('section');
+
+        var observer = new IntersectionObserver( entries => {
+            entries.forEach( entry => {
+                if( entry.isIntersecting ) {
+                    document.querySelector(`nav a.is-active`).classList.remove('is-active');
+                    document.querySelector(`a[href$="#${entry.target.className}"]`).classList.add('is-active');
+                }
+            });
+        }, { threshold: 0.5, rootMargin: '100px' });
+
+        sections.forEach( section => observer.observe( section ) );
+    }
 });
