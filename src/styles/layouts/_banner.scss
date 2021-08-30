@@ -71,7 +71,9 @@ h1 {
     border-radius: 24px;
     background: linear-gradient(to right, $yellow 0%, $yellow 20%, $grey-yellow 100%);
     box-shadow: $shadow;
+}
 
+.cta-banner .cta-btn {
     &:hover, &:focus, &:active {
         background-color: $grey-yellow;
     }
