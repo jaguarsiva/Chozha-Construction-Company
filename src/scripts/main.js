@@ -1,84 +1,130 @@
 
+// Common
+const html = document.querySelector('html');
+const sections = document.querySelectorAll('section');
+
 // Header
 const nav = document.querySelector('nav');
-const html = document.querySelector('html');
-const navLinks = document.querySelectorAll('nav a');
+const navList = document.querySelector('#navList');
 const hamburger = document.querySelector('#hamburger');
 
 // Projects
-const projectButtons = document.querySelectorAll('.btn-project');
 const projectsInner = document.querySelector('#projectsInner');
 const modal = document.querySelector('#modal');
 const modalContents = document.querySelector('#modalContents');
+const closeButton = document.querySelector('#closeButton');
 const modalImage = document.querySelector('#modalImage');
 const modalCaption = document.querySelector('#modalCaption');
-const closeButton = document.querySelector('#closeButton');
+
+// Flags
+let isObserverSet = false;
+let isNavEventsSet = false;
+
+function toggleHamburger() {
+    hamburger.classList.toggle('is-active');
+    nav.classList.toggle('is-open');
+    html.classList.toggle('is-frozen');
+}
+
+const observer = new IntersectionObserver( entries => {
+    entries.forEach( entry => {
+        if( entry.isIntersecting ) {
+            document.querySelector(`nav a.is-active`).classList.remove('is-active');
+            document.querySelector(`a[href$="#${entry.target.className}"]`).classList.add('is-active');
+        }
+    });
+}, { threshold: 0.5, rootMargin: '100px' });
+
+function toggleModal() {
+    html.classList.toggle('is-frozen');
+    modal.classList.toggle('is-shown');
+}
+
+function setModalContents({ imgPath, altText, caption }) {
+    modalImage.setAttribute('src', imgPath );
+    modalImage.setAttribute('alt', altText );
+    modalCaption.innerText = caption;
+}
+
+function closeModal() {
+    toggleModal();
+    setModalContents({
+        imgPath: '',
+        altText: '',
+        caption: ''
+    });
+}
+
+// Throttle Function Definition
+function throttle( functionToThrottle, delayTime ) {
+    let toThrottle = false;
+    return function() {
+        if( toThrottle ) return;
+        functionToThrottle.apply(this, arguments);
+        toThrottle = true;
+        setTimeout( () => {
+            toThrottle = false;
+        }, delayTime );
+    }
+}
+
+function init() {
+    if( window.innerWidth < 768 ) {
+
+        if( isNavEventsSet ) return;
+        // Open and Closing of Nav
+        hamburger.addEventListener('click', toggleHamburger );
+
+        // Adding active class on nav links
+        // Used Event delegation
+        navList.addEventListener('click', event => {
+            if( !event.target.matches('a') ) return;
+            toggleHamburger();
+            navList.querySelector('a.is-active').classList.remove('is-active');
+            event.target.classList.add('is-active');
+        });
+        isNavEventsSet = true;
+    }
+    else {
+        // Adding active class using observer
+        if( isObserverSet ) return;
+
+        sections.forEach( section => {
+            observer.observe( section );
+        });
+        isObserverSet = true;
+    }
+}
+
+const throttledInit = throttle( init, 600 );
 
 // DOM Content Loaded Event
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Hamburger
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('is-active');
-        nav.classList.toggle('is-open');
-        html.classList.toggle('is-frozen');
-    });
+    // Init Function called on Initial load...
+    init();
 
-    // Nav Links
-    if( window.innerWidth < 768 ) {
-        navLinks.forEach( link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('is-active');
-                nav.classList.remove('is-open');
-                html.classList.remove('is-frozen');
-                document.querySelector('nav a.is-active').classList.remove('is-active');
-                link.classList.add('is-active');
-            });
-        });
-    }
+    // Show projects image on modal
+    // Used Event delegation
+    projectsInner.addEventListener('click', event => {
 
-    // Projects
-    projectButtons.forEach( btn => {
-        btn.addEventListener('click', () => {
-            const project = projectsInner.querySelector('#project' + btn.dataset.projectno);
-            const imgPath = project.querySelector('img').getAttribute('src');
-            const altText = project.querySelector('img').getAttribute('alt');
-            const caption = project.querySelector('figcaption').innerText;
-            html.classList.add('is-frozen');
-            modal.classList.add('is-shown');
-            modalImage.setAttribute('src', imgPath );
-            modalImage.setAttribute('alt', altText );
-            modalCaption.innerText = caption;
+        if( !event.target.matches('.btn-project') ) return;
+        const project = projectsInner.querySelector('#project' + event.target.dataset.projectno);
+        const projectImage = project.querySelector('img');
+        const imageCaption = project.querySelector('figcaption');
+        toggleModal();
+        setModalContents({
+            imgPath: projectImage.getAttribute('src'),
+            altText: projectImage.getAttribute('alt'),
+            caption: imageCaption.innerText
         });
     });
 
-    function closeModal() {
-        modalImage.setAttribute('src', '' );
-        modalImage.setAttribute('alt', '' );
-        modalCaption.innerText = '';
-        html.classList.remove('is-frozen');
-        modal.classList.remove('is-shown');
-    }
-
-    closeButton.addEventListener('click', closeModal );
     modal.addEventListener('click', closeModal );
+    closeButton.addEventListener('click', closeModal );
     modalContents.addEventListener('click', event => {
         event.stopPropagation();
     });
-
-    // Observer
-    if( 768 <= window.innerWidth ) {
-        const sections = document.querySelectorAll('section');
-
-        var observer = new IntersectionObserver( entries => {
-            entries.forEach( entry => {
-                if( entry.isIntersecting ) {
-                    document.querySelector(`nav a.is-active`).classList.remove('is-active');
-                    document.querySelector(`a[href$="#${entry.target.className}"]`).classList.add('is-active');
-                }
-            });
-        }, { threshold: 0.5, rootMargin: '100px' });
-
-        sections.forEach( section => observer.observe( section ) );
-    }
 });
+
+window.addEventListener('resize', throttledInit );
